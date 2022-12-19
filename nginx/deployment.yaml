@@ -2,7 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata: # kpt-merge: example/nginx
   name: nginx
-  namespace: example
+  namespace: nginx
   annotations:
     internal.kpt.dev/upstream-identifier: 'apps|Deployment|example|nginx'
 spec:
