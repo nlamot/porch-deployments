@@ -1,0 +1,29 @@
+apiVersion: kpt.dev/v1
+kind: Kptfile
+metadata: # kpt-merge: /nginx
+  name: nginx
+  annotations:
+    config.kubernetes.io/local-config: "true"
+    internal.kpt.dev/upstream-identifier: kpt.dev|Kptfile|default|nginx
+upstream:
+  type: git
+  git:
+    repo: https://github.com/nlamot/porch-blueprints.git
+    directory: nginx
+    ref: nginx/v1
+upstreamLock:
+  type: git
+  git:
+    repo: https://github.com/nlamot/porch-blueprints.git
+    directory: nginx
+    ref: nginx/v1
+    commit: 1f9c480a34edb168f7090a80e1ecb31b1285c79e
+info:
+  description: Standard deployment of nginx
+pipeline:
+  mutators:
+  - image: gcr.io/kpt-fn/set-namespace:v0.4.1
+    configPath: package-context.yaml
+  validators:
+  - image: gcr.io/kpt-fn/kubeval:v0.3.0
+    configPath: kubeval-config.yaml
